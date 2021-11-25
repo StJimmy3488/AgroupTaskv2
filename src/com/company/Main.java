@@ -41,8 +41,6 @@ public class Main {
     }
 
 
-
-
     public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> sortedMap) {
         List<Map.Entry<String, Integer>> entryList = new LinkedList<>(sortedMap.entrySet());
         Collections.sort(entryList, new Comparator<Map.Entry<String, Integer>>() {
