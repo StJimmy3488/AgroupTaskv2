@@ -6,31 +6,22 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(new File("\\C:\\Users\\karin\\Desktop\\Random Book.txt"));
+        Scanner sc = new Scanner(new File("\\C:\\Users\\Ilay\\Desktop\\Random_Book.txt"));
 
         List<String> list = new ArrayList<>();
         while (sc.hasNext()) {
-            String text = sc.next().toLowerCase(); //.replaceAll("[\\w\\s]", "");
+            String text = sc.next().toLowerCase();
             list.add(text);
         }
-
         List<String> filteredWords = new ArrayList<>();
         for (String words : list) {
             String sepWords = words.replaceAll("[^\\w\\s]", "");
             filteredWords.add(sepWords);
         }
-//        System.out.println(filteredWords);
-        Set<String> uniqueWordSet = new HashSet<>();
-        List<String> uniqueWordList = new ArrayList<>();
-        for (String values : filteredWords) {
-            if (uniqueWordSet.add(values)) {
-                uniqueWordList.add(values);
-            }
-        }
+        Set<String> uniqueWordSet = new HashSet<String>(filteredWords);
         HashMap<String, Integer> wordOccurrencesMap = new HashMap<>();
-        int frequency;
-        for (String uniqueWord : uniqueWordList) {
-            frequency = Collections.frequency(filteredWords, uniqueWord);
+        for (String uniqueWord : uniqueWordSet) {
+            int frequency = Collections.frequency(filteredWords, uniqueWord);
             wordOccurrencesMap.put(uniqueWord, frequency);
         }
         Map<String, Integer> hm = sortByValue(wordOccurrencesMap);
@@ -39,7 +30,6 @@ public class Main {
                     ", occurrences: " + stringIntegerEntry.getValue());
         }
     }
-
 
     public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> sortedMap) {
         List<Map.Entry<String, Integer>> entryList = new LinkedList<>(sortedMap.entrySet());
@@ -56,6 +46,5 @@ public class Main {
         }
         return temp;
     }
-
 }
 
