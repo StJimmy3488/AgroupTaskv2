@@ -1,16 +1,30 @@
 package com.company;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(new File("\\C:\\Users\\Ilay\\Desktop\\Random_Book.txt"));
+    String m = "";
 
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter file name: ");
+        String name = sc.nextLine();
+        System.out.println("Select disk to search in (ex. c, d, j): ");
+        String disc = sc.nextLine();
+        System.out.println("please wait...");
+        disc += ":\\\\";
+        Main m = new Main();
+        String path = m.fileFinder(name, new File(disc));
+        System.out.println(path);
+
+        Scanner scanner = new Scanner(new File(path));
         List<String> list = new ArrayList<>();
-        while (sc.hasNext()) {
-            String text = sc.next().toLowerCase();
+        while (scanner.hasNext()) {
+            String text = scanner.next().toLowerCase();
             list.add(text);
         }
         List<String> filteredWords = new ArrayList<>();
@@ -45,6 +59,23 @@ public class Main {
             temp.put(entry.getKey(), entry.getValue());
         }
         return temp;
+    }
+
+    public String fileFinder(String name, File file) {
+        File[] list = file.listFiles();
+        if (list != null) {
+            for (File fil : list) {
+                if (fil.isDirectory()) {
+                    fileFinder(name, fil);
+                } else if (name.equalsIgnoreCase(fil.getName())) {
+                    m = fil.getAbsolutePath();
+                }
+
+
+            }
+        }
+        return m;
+
     }
 }
 
